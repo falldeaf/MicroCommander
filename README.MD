@@ -18,15 +18,15 @@ MicroCommander is a Node.js library that makes it easier to define RESTful APIs 
 ## Installation
 
 Install via npm:
-\`\`\`
+```
 npm install micro-commander
-\`\`\`
+```
 
 ## Quick Start
 
 Here's a simple example to get you started:
 
-\`\`\`javascript
+```javascript
 const MicroCommander = require('micro-commander');
 
 const myService = new MicroCommander('config.json', 'MyService', 8080, true);
@@ -38,7 +38,7 @@ myService.defineAction('sayHello', () => {
 
 // Start the service
 myService.listen();
-\`\`\`
+```
 
 Now, if you send a GET request to \`http://localhost:8080/sayHello\`, it will execute the action and you'll see "Hello, World!" printed to the console.
 
@@ -46,14 +46,71 @@ Now, if you send a GET request to \`http://localhost:8080/sayHello\`, it will ex
 
 ### Initialization
 
-\`\`\`javascript
+```javascript
 const myService = new MicroCommander(configFile, serviceName, port, discoverable);
-\`\`\`
+```
 
 ### Method: \`defineAction(path, callback, category, description)\`
 
 Defines an action that can be executed through a GET request.
 
+	path: The URL path for the action.
+	callback: The function to execute when the action is triggered.
+	category: Optional. The category under which the action falls.
+	description: Optional. A description of the action.
+
+### Method: \`isSwitchOn(path)\`
+
+Returns the current status of a switch defined in the service.
+
+	path: The URL path for the switch.
+
+### Method: \`defineSwitch(path, default_state, category)\`
+
+Defines a switch that can be toggled through a GET request.
+
+	path: The URL path for the switch.
+	default_state: The default state of the switch.
+	category: Optional. The category under which the switch falls.
+
+### Method: \`defineCron(path, taskCallback, category)\`
+
+Defines a cron task that can be executed through a GET request.
+
+	path: The URL path for the cron task.
+	taskCallback: The callback function to execute when the task is triggered.
+	category: Optional. The category under which the task falls.
+
+### Method: \`defineColor(path, category)\`
+
+Defines a color setting that can be changed through a GET request.
+
+	path: The URL path for the color setting.
+	category: Optional. The category under which the color setting falls.
+
+### Method: \`defineFileUpload(path, maxFileSize, filename, category)\`
+
+Defines a file upload route with size and filename restrictions.
+
+	path: The URL path for the file upload.
+	maxFileSize: The maximum file size allowed for upload.
+	filename: The filename to save the uploaded file as.
+	category: Optional. The category under which the file upload falls.
+
+### Method: \`defineLog(path, maxLines, category)\`
+
+Defines a logging mechanism for a specified path.
+
+	path: The URL path for the log.
+	maxLines: Optional. The maximum number of lines to keep in the log file.
+	category: Optional. The category under which the log falls.
+
+### Method: \`appendLog(path, message)\`
+
+Appends a message to a log file defined by the path.
+
+	path: The URL path for the log.
+	message: The message to append to the log.
 ### Special Routes
 
 - **/map**: This route shows all available commands in JSON format.
