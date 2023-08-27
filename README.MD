@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="./microcommander_logo.png" alt="Silly AI Gen logo of a little Napoleon on a laptop">
+</p>
 # MicroCommander
 
 ## Overview
