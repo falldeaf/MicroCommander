@@ -23,7 +23,7 @@ MicroCommander is a Node.js library that makes it easier to define RESTful APIs 
 
 Install via npm:
 ```
-npm install micro-commander
+npm install microcommander
 ```
 
 ## Quick Start
