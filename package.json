@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "An insecure rest controller for small local network micro services",
   "main": "MicroCommander.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/falldeaf/MicroCommander.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
