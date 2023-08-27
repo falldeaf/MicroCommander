@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./your-image-file-name.extension" alt="Your Image Description">
+  <img src="./microcommander_logo.png" alt="Silly AI Gen logo of a little Napoleon on a laptop">
 </div>
 
 # MicroCommander
