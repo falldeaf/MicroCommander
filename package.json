@@ -1,6 +1,6 @@
 {
   "name": "microcommander",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "An insecure rest controller for small local network micro services",
   "main": "MicroCommander.js",
   "repository": {

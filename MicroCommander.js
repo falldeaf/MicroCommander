@@ -188,7 +188,6 @@ class MicroCommander {
 	// and for the view, it will allow dynamic 'paths'. The main path will return the whole object
 	// and for sub paths, post a period delimited path to get the value
 	defineJson(path, json, category = '') {
-		console.log(json);
 
 		this.defineRoute('post', `/${path}/set`, (req, res) => {
 			const value = req.body.value;
