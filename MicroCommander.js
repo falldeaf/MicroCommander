@@ -5,6 +5,7 @@ const fs = require('fs');
 const multer = require('multer');
 const merge = require('lodash.merge');
 const redis = require('redis');
+const { get } = require('http');
 const rclient = redis.createClient();
 
 class MicroCommander {
@@ -187,23 +188,24 @@ class MicroCommander {
 	// define a route that takes a json object, that has view and set
 	// and for the view, it will allow dynamic 'paths'. The main path will return the whole object
 	// and for sub paths, post a period delimited path to get the value
-	defineJson(path, json, category = '') {
+	defineJson(path, getjson, category = '') {
 
 		this.defineRoute('post', `/${path}/set`, (req, res) => {
 			const value = req.body.value;
+			let json = getjson();
 			json = value;
 			res.json({ message: 'Json set successfully' });
 		}, category, `Set json for ${path}`);
 
 		this.defineRoute('get', `/${path}/view`, (req, res) => {
-			res.json(json);
+			res.json(getjson());
 		}, category, `View json for ${path}`);
 
 		this.defineRoute('post', `/${path}/view`, (req, res) => {
 			const value = req.body.value;
 			const paths = value.split('.');
 
-			let temp = json;
+			let temp = getjson();
 			for(let i = 0; i < paths.length; i++) {
 				temp = temp[paths[i]];
 			}
