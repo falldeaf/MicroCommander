@@ -89,10 +89,10 @@ class MicroCommander {
 	defineRoute(method, path, callback, category = '', description) {
 		this.app[method](path, callback);
 		this.routes.push({
-		method: method.toUpperCase(),
-		path: path,
-		category: category,
-		description: description
+			method: method.toUpperCase(),
+			path: path,
+			category: category,
+			description: description
 		});
 	}
 
@@ -169,19 +169,47 @@ class MicroCommander {
 		this.configs.colors = this.configs.colors || {};
 
 		this.defineRoute('post', `/${path}/set`, (req, res) => {
-		const color = req.body.color;
-		// Simple validation for color - this can be extended
-		if (!/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
-			return res.status(400).json({ error: 'Invalid color format' });
-		}
+			const color = req.body.color;
+			// Simple validation for color - this can be extended
+			if (!/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
+				return res.status(400).json({ error: 'Invalid color format' });
+			}
 
-		this.configs.colors[path] = color;
-		res.json({ message: 'Color set successfully' });
+			this.configs.colors[path] = color;
+			res.json({ message: 'Color set successfully' });
 		}, category, `Set color for ${path}`);
 
 		this.defineRoute('get', `/${path}/view`, (req, res) => {
-		res.json({ color: this.configs.colors[path] });
+			res.json({ color: this.configs.colors[path] });
 		}, category, `View color for ${path}`);
+	}
+
+	// define a route that takes a json object, that has view and set
+	// and for the view, it will allow dynamic 'paths'. The main path will return the whole object
+	// and for sub paths, post a period delimited path to get the value
+	defineJson(path, json, category = '') {
+		console.log(json);
+
+		this.defineRoute('post', `/${path}/set`, (req, res) => {
+			const value = req.body.value;
+			json = value;
+			res.json({ message: 'Json set successfully' });
+		}, category, `Set json for ${path}`);
+
+		this.defineRoute('get', `/${path}/view`, (req, res) => {
+			res.json(json);
+		}, category, `View json for ${path}`);
+
+		this.defineRoute('post', `/${path}/view`, (req, res) => {
+			const value = req.body.value;
+			const paths = value.split('.');
+
+			let temp = json;
+			for(let i = 0; i < paths.length; i++) {
+				temp = temp[paths[i]];
+			}
+			res.json(temp);
+		}, category, `View json for dynamic paths ${path}`);
 	}
 
 	defineFileUpload(path, maxFileSize, filename, category = '') {
